@@ -7,7 +7,7 @@ import type {
 
 export const siteIdentity = {
   name: "Gran Regional",
-  descriptor: "Lounge & Bar",
+  descriptor: "Night Club",
   city: "Chachapoyas",
   region: "Amazonas",
   country: "Perú",
@@ -37,7 +37,7 @@ export const navigation: readonly NavigationItem[] = [
 ];
 
 export const heroContent: HeroContent = {
-  eyebrow: "Lounge & Bar · Chachapoyas",
+  eyebrow: "Night Club · Chachapoyas",
   title: "La noche tiene",
   titleAccent: "protagonistas",
   description:

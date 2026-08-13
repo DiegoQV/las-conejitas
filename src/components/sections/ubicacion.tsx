@@ -19,7 +19,7 @@ export function Ubicacion() {
           <div className="ubicacion__address">
             <MapPin size={20} aria-hidden="true" />
             <div>
-              <strong>Gran Regional Lounge &amp; Bar</strong>
+              <strong>Gran Regional Night Club</strong>
               <span>Avenida Aeropuerto, cuadra 15</span>
               <span>Referencia: sector Manchibamba</span>
               <small>Chachapoyas, Amazonas · Perú</small>

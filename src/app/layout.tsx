@@ -32,19 +32,19 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: `${siteIdentity.name} | ${siteIdentity.descriptor} en ${siteIdentity.city}`,
   description:
-    "Gran Regional Lounge & Bar: entretenimiento nocturno para mayores de 18 años en Chachapoyas, Amazonas.",
+    "Gran Regional Night Club: entretenimiento nocturno para mayores de 18 años en Chachapoyas, Amazonas.",
   applicationName: siteIdentity.name,
   alternates: {
     canonical: "/",
   },
   keywords: [
     "Gran Regional",
-    "Lounge & Bar",
+    "Night Club",
     "Chachapoyas",
     "Amazonas",
     "entretenimiento nocturno",
     "bar en Chachapoyas",
-    "lounge bar en Amazonas",
+    "night club en Amazonas",
     "Las Conejitas Chachapoyas",
   ],
   openGraph: {
