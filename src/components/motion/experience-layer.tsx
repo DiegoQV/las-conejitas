@@ -68,7 +68,7 @@ export function ExperienceLayer() {
 
   return (
     <>
-      {!reduceMotion && experienceReady && (
+      {experienceReady && (
         <motion.div
           className="intro-sequence"
           initial={{ opacity: 1, clipPath: "inset(0 0 0 0)" }}

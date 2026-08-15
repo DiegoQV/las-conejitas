@@ -21,8 +21,8 @@ export function WordReveal({ children, delay = 0 }: WordRevealProps) {
         hidden: {},
         visible: {
           transition: {
-            staggerChildren: reduceMotion ? 0 : 0.11,
-            delayChildren: reduceMotion ? 0 : delay,
+            staggerChildren: reduceMotion ? 0.045 : 0.11,
+            delayChildren: delay,
           },
         },
       }}
@@ -34,11 +34,11 @@ export function WordReveal({ children, delay = 0 }: WordRevealProps) {
           key={`${word}-${index}`}
           variants={{
             hidden: reduceMotion
-              ? { opacity: 1, y: 0 }
+              ? { opacity: 0, y: "0.18em", filter: "blur(3px)" }
               : { opacity: 0, y: "0.9em", rotateX: 72, filter: "blur(8px)" },
             visible: { opacity: 1, y: 0, rotateX: 0, filter: "blur(0px)" },
           }}
-          transition={{ duration: reduceMotion ? 0 : 0.78, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: reduceMotion ? 0.38 : 0.78, ease: [0.16, 1, 0.3, 1] }}
         >
           {word}
         </motion.span>

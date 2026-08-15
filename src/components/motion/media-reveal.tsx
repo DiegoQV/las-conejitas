@@ -14,11 +14,10 @@ interface MediaRevealProps extends PropsWithChildren {
 export function MediaReveal({ children, className, delay = 0, direction = "left" }: MediaRevealProps) {
   const reduceMotion = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(Boolean(reduceMotion));
+  const [visible, setVisible] = useState(false);
   const from = direction === "left" ? "inset(0 100% 0 0)" : "inset(0 0 0 100%)";
 
   useEffect(() => {
-    if (reduceMotion) return;
     const check = () => {
       const rect = ref.current?.getBoundingClientRect();
       if (rect && rect.top < window.innerHeight * 0.88 && rect.bottom > 0) setVisible(true);
@@ -33,16 +32,16 @@ export function MediaReveal({ children, className, delay = 0, direction = "left"
     <motion.div
       ref={ref}
       className={cn("media-reveal", className)}
-      initial={reduceMotion ? false : { clipPath: from, filter: "blur(14px)", opacity: 0.25, y: 34, scale: 1.045 }}
+      initial={reduceMotion ? { filter: "blur(5px)", opacity: 0.3, y: 8, scale: 1.01 } : { clipPath: from, filter: "blur(14px)", opacity: 0.25, y: 34, scale: 1.045 }}
       animate={visible ? { clipPath: "inset(0 0 0 0)", filter: "blur(0px)", opacity: 1, y: 0, scale: 1 } : undefined}
-      transition={{ duration: reduceMotion ? 0 : 1.15, delay: reduceMotion ? 0 : delay, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: reduceMotion ? 0.48 : 1.15, delay, ease: [0.16, 1, 0.3, 1] }}
     >
       {children}
       <motion.span
         className="media-reveal__curtain"
-        initial={reduceMotion ? false : { scaleX: 1 }}
+        initial={reduceMotion ? { scaleX: 0.35, opacity: 0.35 } : { scaleX: 1 }}
         animate={visible ? { scaleX: 0 } : undefined}
-        transition={{ duration: reduceMotion ? 0 : 0.95, delay: reduceMotion ? 0 : delay + 0.12, ease: [0.76, 0, 0.24, 1] }}
+        transition={{ duration: reduceMotion ? 0.42 : 0.95, delay: delay + 0.12, ease: [0.76, 0, 0.24, 1] }}
         style={{ transformOrigin: direction === "left" ? "right" : "left" }}
         aria-hidden="true"
       />

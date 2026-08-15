@@ -46,7 +46,7 @@ const focusableSelector =
 export function GalleryGrid() {
   const reduceMotion = useReducedMotion();
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const [gridVisible, setGridVisible] = useState(Boolean(reduceMotion));
+  const [gridVisible, setGridVisible] = useState(false);
   const gridRef = useRef<HTMLDivElement>(null);
   const closeButton = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -54,7 +54,6 @@ export function GalleryGrid() {
   const touchStartX = useRef<number | null>(null);
 
   useEffect(() => {
-    if (reduceMotion) return;
     const check = () => {
       const rect = gridRef.current?.getBoundingClientRect();
       if (rect && rect.top < window.innerHeight * 0.9 && rect.bottom > 0) setGridVisible(true);
@@ -126,7 +125,7 @@ export function GalleryGrid() {
             className={`gallery__item gallery__item--${image.size}`}
             key={image.src}
             type="button"
-            initial={reduceMotion ? false : { opacity: 0, filter: "blur(32px) saturate(0.15) brightness(0.3)", clipPath: index % 2 === 0 ? "inset(0 100% 0 0)" : "inset(0 0 100% 0)", scale: 1.12 }}
+            initial={reduceMotion ? { opacity: 0, filter: "blur(8px) saturate(0.65)", scale: 1.02 } : { opacity: 0, filter: "blur(32px) saturate(0.15) brightness(0.3)", clipPath: index % 2 === 0 ? "inset(0 100% 0 0)" : "inset(0 0 100% 0)", scale: 1.12 }}
             animate={gridVisible ? {
               opacity: [0, 0.18, 0.52, 0.82, 1],
               filter: [
@@ -145,7 +144,7 @@ export function GalleryGrid() {
               ],
               scale: [1.12, 1.09, 1.055, 1.02, 1],
             } : undefined}
-            transition={{ duration: reduceMotion ? 0 : 1.75, delay: reduceMotion ? 0 : index * 0.22, times: [0, 0.2, 0.48, 0.76, 1], ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: reduceMotion ? 0.58 : 1.75, delay: index * (reduceMotion ? 0.08 : 0.22), times: [0, 0.2, 0.48, 0.76, 1], ease: [0.16, 1, 0.3, 1] }}
             onClick={(event) => {
               lastFocusedTrigger.current = event.currentTarget;
               setActiveIndex(index);
@@ -166,9 +165,9 @@ export function GalleryGrid() {
             <Expand className="gallery__expand" size={17} aria-hidden="true" />
             <motion.span
               className="gallery__reveal-curtain"
-              initial={reduceMotion ? false : { scaleY: 1 }}
+              initial={reduceMotion ? { scaleY: 0.25, opacity: 0.25 } : { scaleY: 1 }}
               animate={gridVisible ? { scaleY: [1, 0.86, 0.42, 0], opacity: [1, 0.82, 0.38, 0] } : undefined}
-              transition={{ duration: reduceMotion ? 0 : 1.45, delay: reduceMotion ? 0 : 0.08 + index * 0.22, times: [0, 0.28, 0.68, 1], ease: [0.76, 0, 0.24, 1] }}
+              transition={{ duration: reduceMotion ? 0.45 : 1.45, delay: 0.08 + index * (reduceMotion ? 0.08 : 0.22), times: [0, 0.28, 0.68, 1], ease: [0.76, 0, 0.24, 1] }}
               aria-hidden="true"
             />
             <motion.span
