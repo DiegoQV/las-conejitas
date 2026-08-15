@@ -6,6 +6,7 @@ import { AgeGate } from "@/components/layout/age-gate";
 import { Footer } from "@/components/layout/footer";
 import { Navbar } from "@/components/layout/navbar";
 import { ScrollProgress } from "@/components/motion/scroll-progress";
+import { ExperienceLayer } from "@/components/motion/experience-layer";
 import { FloatingWhatsApp } from "@/components/ui/floating-whatsapp";
 import { siteIdentity } from "@/data/site";
 import { absoluteUrl, siteUrl } from "@/lib/seo";
@@ -80,6 +81,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         <AgeGate />
         <Navbar />
         <ScrollProgress />
+        <ExperienceLayer />
         {children}
         <Footer />
         <FloatingWhatsApp />

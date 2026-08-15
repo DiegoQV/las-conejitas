@@ -2,7 +2,7 @@
 
 import { animate, motion, useMotionValue, useReducedMotion, useTransform } from "framer-motion";
 import { Gift, MapPin, Mic2, Ticket } from "lucide-react";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useRef, type PointerEvent, type ReactNode } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -98,10 +98,30 @@ export function HeroImageReveal({
   className,
 }: HeroImageRevealProps) {
   const reduceMotion = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const rotateX = useMotionValue(0);
+  const rotateY = useMotionValue(0);
+
+  const handlePointerMove = (event: PointerEvent<HTMLDivElement>) => {
+    if (reduceMotion || event.pointerType === "touch") return;
+    const bounds = ref.current?.getBoundingClientRect();
+    if (!bounds) return;
+    rotateY.set(((event.clientX - bounds.left) / bounds.width - 0.5) * 7);
+    rotateX.set(-((event.clientY - bounds.top) / bounds.height - 0.5) * 7);
+  };
+
+  const resetTilt = () => {
+    animate(rotateX, 0, { duration: 0.45 });
+    animate(rotateY, 0, { duration: 0.45 });
+  };
 
   return (
     <motion.div
+      ref={ref}
       className={cn(className)}
+      onPointerMove={handlePointerMove}
+      onPointerLeave={resetTilt}
+      style={{ rotateX, rotateY, transformPerspective: 1100 }}
       initial={
         reduceMotion
           ? false

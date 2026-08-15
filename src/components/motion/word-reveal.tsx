@@ -21,7 +21,7 @@ export function WordReveal({ children, delay = 0 }: WordRevealProps) {
         hidden: {},
         visible: {
           transition: {
-            staggerChildren: reduceMotion ? 0 : 0.07,
+            staggerChildren: reduceMotion ? 0 : 0.11,
             delayChildren: reduceMotion ? 0 : delay,
           },
         },
@@ -35,10 +35,10 @@ export function WordReveal({ children, delay = 0 }: WordRevealProps) {
           variants={{
             hidden: reduceMotion
               ? { opacity: 1, y: 0 }
-              : { opacity: 0, y: "0.65em", rotate: 2 },
-            visible: { opacity: 1, y: 0, rotate: 0 },
+              : { opacity: 0, y: "0.9em", rotateX: 72, filter: "blur(8px)" },
+            visible: { opacity: 1, y: 0, rotateX: 0, filter: "blur(0px)" },
           }}
-          transition={{ duration: reduceMotion ? 0 : 0.55, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: reduceMotion ? 0 : 0.78, ease: [0.16, 1, 0.3, 1] }}
         >
           {word}
         </motion.span>

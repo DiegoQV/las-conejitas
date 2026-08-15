@@ -3,6 +3,7 @@ import { Sparkles, Star } from "lucide-react";
 
 import { Reveal } from "@/components/motion/reveal";
 import { WordReveal } from "@/components/motion/word-reveal";
+import { MediaReveal } from "@/components/motion/media-reveal";
 
 export function Conejitas() {
   return (
@@ -27,7 +28,7 @@ export function Conejitas() {
       </div>
 
       <div className="shell conejitas__gallery">
-        <Reveal className="conejitas__feature" delay={0.08}>
+        <MediaReveal className="conejitas__feature" delay={0.08}>
           <div className="conejitas__image-wrap conejitas__image-wrap--wide">
             <Image
               src="/images/editorial/editorial-01.webp"
@@ -42,9 +43,9 @@ export function Conejitas() {
               <strong>Una noche para recordar</strong>
             </div>
           </div>
-        </Reveal>
+        </MediaReveal>
 
-        <Reveal className="conejitas__portrait" delay={0.18}>
+        <MediaReveal className="conejitas__portrait" delay={0.18} direction="right">
           <div className="conejitas__image-wrap conejitas__image-wrap--portrait">
             <Image
               src="/images/models/hero-model-03.webp"
@@ -58,7 +59,7 @@ export function Conejitas() {
             <Star size={14} aria-hidden="true" />
             <span>Las protagonistas<br /><b>de tu noche</b></span>
           </div>
-        </Reveal>
+        </MediaReveal>
       </div>
 
       <div className="conejitas__marquee" aria-hidden="true">

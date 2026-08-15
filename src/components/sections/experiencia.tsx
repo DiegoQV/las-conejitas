@@ -3,6 +3,7 @@ import { Gift, Martini, Music2, Sparkles } from "lucide-react";
 
 import { Reveal } from "@/components/motion/reveal";
 import { WordReveal } from "@/components/motion/word-reveal";
+import { MediaReveal } from "@/components/motion/media-reveal";
 
 const experiences = [
   {
@@ -40,7 +41,7 @@ export function Experiencia() {
           </Reveal>
         </div>
 
-        <Reveal className="experiencia__visual" delay={0.08}>
+        <MediaReveal className="experiencia__visual" delay={0.08}>
           <div className="experiencia__visual-frame">
             <Image
               src="/images/editorial/editorial-03.webp"
@@ -52,7 +53,7 @@ export function Experiencia() {
             <div className="experiencia__visual-overlay" aria-hidden="true" />
             <span>La identidad que se vive en Gran Regional</span>
           </div>
-        </Reveal>
+        </MediaReveal>
 
         <div className="experiencia__grid">
           {experiences.map(({ icon: Icon, number, title, text }, index) => (

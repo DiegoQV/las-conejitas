@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, Expand, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 
 const galleryImages = [
   {
@@ -43,10 +44,26 @@ const focusableSelector =
   'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
 export function GalleryGrid() {
+  const reduceMotion = useReducedMotion();
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [gridVisible, setGridVisible] = useState(Boolean(reduceMotion));
+  const gridRef = useRef<HTMLDivElement>(null);
   const closeButton = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   const lastFocusedTrigger = useRef<HTMLButtonElement | null>(null);
+  const touchStartX = useRef<number | null>(null);
+
+  useEffect(() => {
+    if (reduceMotion) return;
+    const check = () => {
+      const rect = gridRef.current?.getBoundingClientRect();
+      if (rect && rect.top < window.innerHeight * 0.9 && rect.bottom > 0) setGridVisible(true);
+    };
+    check();
+    window.addEventListener("scroll", check, { passive: true });
+    window.addEventListener("resize", check);
+    return () => { window.removeEventListener("scroll", check); window.removeEventListener("resize", check); };
+  }, [reduceMotion]);
 
   const closeLightbox = () => {
     setActiveIndex(null);
@@ -103,12 +120,32 @@ export function GalleryGrid() {
 
   return (
     <>
-      <div className="gallery__grid">
+      <div ref={gridRef} className="gallery__grid">
         {galleryImages.map((image, index) => (
-          <button
+          <motion.button
             className={`gallery__item gallery__item--${image.size}`}
             key={image.src}
             type="button"
+            initial={reduceMotion ? false : { opacity: 0, filter: "blur(32px) saturate(0.15) brightness(0.3)", clipPath: index % 2 === 0 ? "inset(0 100% 0 0)" : "inset(0 0 100% 0)", scale: 1.12 }}
+            animate={gridVisible ? {
+              opacity: [0, 0.18, 0.52, 0.82, 1],
+              filter: [
+                "blur(32px) saturate(0.15) brightness(0.3)",
+                "blur(24px) saturate(0.35) brightness(0.48)",
+                "blur(13px) saturate(0.7) brightness(0.68)",
+                "blur(5px) saturate(0.92) brightness(0.9)",
+                "blur(0px) saturate(1) brightness(1)",
+              ],
+              clipPath: [
+                index % 2 === 0 ? "inset(0 100% 0 0)" : "inset(0 0 100% 0)",
+                "inset(0 68% 0 0)",
+                "inset(0 28% 0 0)",
+                "inset(0 7% 0 0)",
+                "inset(0 0 0 0)",
+              ],
+              scale: [1.12, 1.09, 1.055, 1.02, 1],
+            } : undefined}
+            transition={{ duration: reduceMotion ? 0 : 1.75, delay: reduceMotion ? 0 : index * 0.22, times: [0, 0.2, 0.48, 0.76, 1], ease: [0.16, 1, 0.3, 1] }}
             onClick={(event) => {
               lastFocusedTrigger.current = event.currentTarget;
               setActiveIndex(index);
@@ -127,7 +164,21 @@ export function GalleryGrid() {
             </span>
             <span className="gallery__caption"><i>{String(index + 1).padStart(2, "0")}</i>{image.label}</span>
             <Expand className="gallery__expand" size={17} aria-hidden="true" />
-          </button>
+            <motion.span
+              className="gallery__reveal-curtain"
+              initial={reduceMotion ? false : { scaleY: 1 }}
+              animate={gridVisible ? { scaleY: [1, 0.86, 0.42, 0], opacity: [1, 0.82, 0.38, 0] } : undefined}
+              transition={{ duration: reduceMotion ? 0 : 1.45, delay: reduceMotion ? 0 : 0.08 + index * 0.22, times: [0, 0.28, 0.68, 1], ease: [0.76, 0, 0.24, 1] }}
+              aria-hidden="true"
+            />
+            <motion.span
+              className="gallery__develop-flash"
+              initial={reduceMotion ? false : { opacity: 0, x: "-120%" }}
+              animate={gridVisible ? { opacity: [0, 0.7, 0], x: ["-120%", "0%", "120%"] } : undefined}
+              transition={{ duration: reduceMotion ? 0 : 1.1, delay: reduceMotion ? 0 : 0.42 + index * 0.22, times: [0, 0.5, 1], ease: "easeInOut" }}
+              aria-hidden="true"
+            />
+          </motion.button>
         ))}
       </div>
 
@@ -141,7 +192,19 @@ export function GalleryGrid() {
           <button className="gallery-lightbox__nav gallery-lightbox__nav--previous" type="button" onClick={showPrevious} aria-label="Imagen anterior">
             <ChevronLeft aria-hidden="true" />
           </button>
-          <figure className="gallery-lightbox__figure">
+          <figure
+            className="gallery-lightbox__figure"
+            onTouchStart={(event) => { touchStartX.current = event.touches[0]?.clientX ?? null; }}
+            onTouchEnd={(event) => {
+              if (touchStartX.current === null) return;
+              const distance = (event.changedTouches[0]?.clientX ?? touchStartX.current) - touchStartX.current;
+              if (Math.abs(distance) > 48) {
+                if (distance > 0) showPrevious();
+                else showNext();
+              }
+              touchStartX.current = null;
+            }}
+          >
             <Image
               src={galleryImages[activeIndex].src}
               alt={galleryImages[activeIndex].alt}
@@ -151,7 +214,7 @@ export function GalleryGrid() {
               className="gallery-lightbox__image"
               priority
             />
-            <figcaption>{galleryImages[activeIndex].label} <span>{activeIndex + 1} / {galleryImages.length}</span></figcaption>
+            <figcaption>{galleryImages[activeIndex].label} <span>{activeIndex + 1} / {galleryImages.length}</span><small>Desliza para explorar</small></figcaption>
           </figure>
           <button className="gallery-lightbox__nav gallery-lightbox__nav--next" type="button" onClick={showNext} aria-label="Imagen siguiente">
             <ChevronRight aria-hidden="true" />

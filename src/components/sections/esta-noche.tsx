@@ -3,6 +3,7 @@ import { Clock3, MapPin, Sparkles } from "lucide-react";
 
 import { Reveal } from "@/components/motion/reveal";
 import { WordReveal } from "@/components/motion/word-reveal";
+import { MediaReveal } from "@/components/motion/media-reveal";
 import { ContactButton } from "@/components/ui/contact-button";
 
 const nightSteps = [
@@ -44,7 +45,7 @@ export function EstaNoche() {
           </Reveal>
         </div>
 
-        <Reveal className="esta-noche__visual" delay={0.16}>
+        <MediaReveal className="esta-noche__visual" delay={0.16} direction="right">
           <div className="esta-noche__visual-frame">
             <Image
               src="/images/editorial/editorial-02.webp"
@@ -56,7 +57,7 @@ export function EstaNoche() {
             <div className="esta-noche__visual-overlay" aria-hidden="true" />
             <span>Una noche con personalidad propia</span>
           </div>
-        </Reveal>
+        </MediaReveal>
       </div>
     </section>
   );
