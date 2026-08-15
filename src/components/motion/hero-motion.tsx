@@ -1,6 +1,6 @@
 "use client";
 
-import { animate, motion, useMotionValue, useReducedMotion, useTransform } from "framer-motion";
+import { animate, motion, useMotionValue, useTransform } from "framer-motion";
 import { Gift, MapPin, Mic2, Ticket } from "lucide-react";
 import { useEffect, useRef, type PointerEvent, type ReactNode } from "react";
 
@@ -12,7 +12,7 @@ interface HeroTitleMotionProps {
 }
 
 export function HeroTitleMotion({ accent, lead }: HeroTitleMotionProps) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = false;
 
   return (
     <h1 id="hero-title">
@@ -63,7 +63,7 @@ export function HeroTitleMotion({ accent, lead }: HeroTitleMotionProps) {
 }
 
 export function HeroOrnamentMotion() {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = false;
 
   return (
     <div className="hero__ornament" aria-hidden="true">
@@ -97,7 +97,7 @@ export function HeroImageReveal({
   children,
   className,
 }: HeroImageRevealProps) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = false;
   const ref = useRef<HTMLDivElement>(null);
   const rotateX = useMotionValue(0);
   const rotateY = useMotionValue(0);
@@ -139,7 +139,7 @@ export function HeroImageReveal({
 }
 
 export function HeroLightSweep() {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = false;
 
   if (reduceMotion) return null;
 
@@ -161,7 +161,7 @@ interface AnimatedCountProps {
 }
 
 export function AnimatedCount({ label, note, value }: AnimatedCountProps) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = false;
   const count = useMotionValue(reduceMotion ? value : 0);
   const rounded = useTransform(count, (latest) => Math.round(latest));
 
@@ -204,7 +204,7 @@ interface HeroRailMotionProps {
 const railIcons = [Mic2, Ticket, Gift] as const;
 
 export function HeroRailMotion({ items, location }: HeroRailMotionProps) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = false;
 
   return (
     <motion.div

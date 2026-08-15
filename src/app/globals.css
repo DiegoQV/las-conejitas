@@ -240,11 +240,6 @@ main > section[id]:not(.hero)::after {
   .gallery-lightbox__figure figcaption small { display: inline; margin-left: auto; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .experience-orbit,
-  .hero-scroll-cue { animation: none; }
-}
-
 a {
   color: inherit;
   text-decoration: none;
@@ -2258,20 +2253,6 @@ button {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
-    transition-duration: 0.01ms !important;
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-  }
-}
 .floating-whatsapp {
   position: fixed;
   right: clamp(1rem, 2.5vw, 2rem);
@@ -2604,28 +2585,4 @@ button {
 @keyframes marquee-slide {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .scroll-progress,
-  .age-gate__dialog,
-  .hero__visual-caption i,
-  .mobile-menu__panel,
-  .mobile-menu__backdrop,
-  .ubicacion__map-pin,
-  .floating-whatsapp::after {
-    animation: none;
-  }
-
-  .conejitas__marquee-track {
-    animation: none;
-  }
-
-  .hero__frame:hover,
-  .experiencia__visual-frame:hover,
-  .esta-noche__visual-frame:hover,
-  .gallery__item:hover,
-  .gallery__item:focus-visible {
-    transform: none;
-  }
 }

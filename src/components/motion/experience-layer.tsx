@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { ArrowDown, Sparkles, Sparkle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { ageGateContent } from "@/data/site";
@@ -15,7 +15,7 @@ const scenes = [
 ] as const;
 
 export function ExperienceLayer() {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = false;
   const [active, setActive] = useState("inicio");
   const [ambience, setAmbience] = useState(true);
   const [experienceReady, setExperienceReady] = useState(false);

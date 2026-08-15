@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { useEffect, useRef, useState, type PropsWithChildren } from "react";
 
 import { cn } from "@/lib/utils";
@@ -12,7 +12,7 @@ interface MediaRevealProps extends PropsWithChildren {
 }
 
 export function MediaReveal({ children, className, delay = 0, direction = "left" }: MediaRevealProps) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = false;
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
   const from = direction === "left" ? "inset(0 100% 0 0)" : "inset(0 0 0 100%)";

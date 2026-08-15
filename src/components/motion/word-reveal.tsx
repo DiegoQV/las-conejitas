@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 
 interface WordRevealProps {
   children: string;
@@ -8,7 +8,7 @@ interface WordRevealProps {
 }
 
 export function WordReveal({ children, delay = 0 }: WordRevealProps) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = false;
   const words = children.trim().split(/\s+/);
 
   return (

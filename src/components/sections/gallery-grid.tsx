@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, Expand, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 
 const galleryImages = [
   {
@@ -44,7 +44,7 @@ const focusableSelector =
   'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
 export function GalleryGrid() {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = false;
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [gridVisible, setGridVisible] = useState(false);
   const gridRef = useRef<HTMLDivElement>(null);
